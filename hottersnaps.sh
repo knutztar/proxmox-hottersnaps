@@ -133,7 +133,7 @@ function cleanup(){
                     ltsDeleteTime=$(date -d "${snapdate} +${cleanupLife} days" +%s);
                     
                     if [[ $currentTime -gt $ltsDeleteTime ]]; then
-                        echo "Found old long term snapshot ${snapname} for virtual machine ${vmno} ${vmname}";
+                        echo "Found old snapshot ${snapname} for virtual machine ${vmno} ${vmname}";
                         qm delsnapshot $vmno $snapname
                     fi;
                     
@@ -157,7 +157,7 @@ function cleanup(){
                     ltsDeleteTime=$(date -d "${snapdate} +${cleanupLife} days" +%s);
                     
                     if [[ $currentTime -gt $ltsDeleteTime ]]; then
-                        echo "Found old long term snapshot ${snapname} for container ${ctno} ${ctname}";
+                        echo "Found old snapshot ${snapname} for container ${ctno} ${ctname}";
                         pct delsnapshot $ctno $snapname
                     fi;
                     
