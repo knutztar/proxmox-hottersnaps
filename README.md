@@ -32,7 +32,7 @@ hottersnaps delete-all
 
 ## Configuration
 
-### Naming
+### Naming prefix
 ```bash
 lts=lts
 sts=sts
@@ -59,3 +59,13 @@ Long term snapshots will be saved for 30 days and short term for 7.
 savestate=1
 ```
 Virtual machines will be saved with RAM in this case. 
+
+## Example snapshot
+Snapshot view after hottersnaps have taken an lts snapshot. 
+If configured as above, after 30 days the below snapshot will be deleted and the snapshots with the "backup" prefix will remain.
+When running the command delete-all all non-hottersnaps snapshots will remain as well. Hottersnaps searches for only snapshots with the configured prefixes.
+![Image of snapshots](https://raw.githubusercontent.com/knutztar/proxmox-hottersnaps/master/screenshots/Screenshot_20200216_212240.png)
+
+## Have fun!
+If you find any issues, you are very welcome to create an issue. 
+Fork, have fun and pull!
