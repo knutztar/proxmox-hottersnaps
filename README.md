@@ -9,6 +9,11 @@ cd proxmox-hottersnaps
 ./install.sh
 ```
 
+### Uninstall
+```bash
+rm /etc/hottersnaps/config.conf; rm /usr/bin/hottersnaps; rm /etc/cron.d/hottersnaps
+```
+
 ## Usage
 ```bash
 #Take long term snapshots of all VM's and CT's
