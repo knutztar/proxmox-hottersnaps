@@ -1,0 +1,12 @@
+#Name of snapshots (prefix)
+lts=lts
+sts=sts
+#Interval of automated snapshots in days (1-14)
+ltsInterval=7
+stsInterval=1
+snapshotTime=0 
+#Life time of snapshots i days.
+ltsLife=30
+stsLife=14
+#include ram
+savestate=1
