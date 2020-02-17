@@ -189,10 +189,10 @@ function install-cron(){
     
     echo "# hottersnaps CRON file for automated snapshotting" >> $tmpCron;
     echo "# hottersnaps Do not edit. This will be overwritten" >> $tmpCron;
-    echo "0 ${snapshotTime} */${ltsInterval} * * root ${installationFile} lts > /dev/null" >> $tmpCron;
-    echo "0 ${snapshotTime} */${stsInterval} * * root ${installationFile} sts > /dev/null" >> $tmpCron;
-    echo "0 ${snapshotTime} * * * root ${installationFile} cleanup > /dev/null" >> $tmpCron;
-    echo "*/10 * * * * root ${installationFile} update-cron > /dev/null" >> $tmpCron;    
+    echo "0 ${snapshotTime} */${ltsInterval} * * ${installationFile} lts > /dev/null" >> $tmpCron;
+    echo "0 ${snapshotTime} */${stsInterval} * * ${installationFile} sts > /dev/null" >> $tmpCron;
+    echo "0 ${snapshotTime} * * * ${installationFile} cleanup > /dev/null" >> $tmpCron;
+    echo "*/10 * * * * ${installationFile} update-cron > /dev/null" >> $tmpCron;    
     
     crontab $tmpCron;
     rm $tmpCron;
