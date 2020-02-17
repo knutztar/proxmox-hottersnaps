@@ -27,6 +27,7 @@
     
 #Files
     cronFile="/etc/cron.d/hottersnaps";
+    tmpCron="/tmp/hottersnaps$(date +%s)";
     configFile="/etc/hottersnaps/config.conf";
     installationFile="/usr/bin/hottersnaps";
 
@@ -171,31 +172,30 @@ function cleanup(){
 
 function install-cron(){
     
-    touch $cronFile > /dev/null 2>&1;
+    crontab -l > $tmpCron;
+    
+    # Delete currently installed hottesnaps
+    sed -i '/.*hottersnaps.*/d' $tmpCron
+    
+    if [[ ! -w $tmpCron ]]; then 
+        echo "Error: No write permission for file ${tmpCron}";
+        exit 1;
+    fi;
     
     if [[ ! -r $installationFile ]]; then 
         echo -e "${BIRed}Error: hottersnaps not installed (${installationFile})${NC}";
         exit 1;
     fi;
     
-    if [[ -w $cronFile ]]; then 
-        echo "#hottersnaps CRON file for automated snapshotting" > $cronFile;
-        echo "# Do not edit. This will be overwritten by hottersnaps" >> $cronFile;
-        echo "" >> $cronFile;
-        echo "# LTS snapshots" >> $cronFile;
-        echo "0 ${snapshotTime} */${ltsInterval} * * root ${installationFile} lts" >> $cronFile;
-        echo "# STS snapshots" >> $cronFile;
-        echo "0 ${snapshotTime} */${stsInterval} * * root ${installationFile} sts" >> $cronFile;
-        echo "# Snapshot cleanup" >> $cronFile;
-        echo "0 ${snapshotTime} * * * root ${installationFile} cleanup" >> $cronFile;
-        echo "# Update cronfile in case of change" >> $cronFile;
-        echo "*/10 * * * * root ${installationFile} update-cron" >> $cronFile;
-        
-        systemctl restart cron
-    else
-        echo "Error: No write permission for file ${cronFile}";
-        exit 1;
-    fi;
+    echo "# hottersnaps CRON file for automated snapshotting" >> $tmpCron;
+    echo "# hottersnaps Do not edit. This will be overwritten" >> $tmpCron;
+    echo "0 ${snapshotTime} */${ltsInterval} * * root ${installationFile} lts > /dev/null" >> $tmpCron;
+    echo "0 ${snapshotTime} */${stsInterval} * * root ${installationFile} sts > /dev/null" >> $tmpCron;
+    echo "0 ${snapshotTime} * * * root ${installationFile} cleanup > /dev/null" >> $tmpCron;
+    echo "*/10 * * * * root ${installationFile} update-cron > /dev/null" >> $tmpCron;    
+    
+    crontab $tmpCron;
+    rm $tmpCron;
     
 }
 

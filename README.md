@@ -11,7 +11,9 @@ cd proxmox-hottersnaps
 
 ### Uninstall
 ```bash
-rm /etc/hottersnaps/config.conf; rm /usr/bin/hottersnaps; rm /etc/cron.d/hottersnaps
+rm /etc/hottersnaps/config.conf; rm /usr/bin/hottersnaps;
+#Remove hottersnaps from cron
+crontab -e
 ```
 
 ## Usage
