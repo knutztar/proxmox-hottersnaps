@@ -183,13 +183,15 @@ function install-cron(){
         echo "# Do not edit. This will be overwritten by hottersnaps" >> $cronFile;
         echo "" >> $cronFile;
         echo "# LTS snapshots" >> $cronFile;
-        echo "0 ${snapshotTime} */${ltsInterval} * * ${installationFile} lts" >> $cronFile;
+        echo "0 ${snapshotTime} */${ltsInterval} * * root ${installationFile} lts" >> $cronFile;
         echo "# STS snapshots" >> $cronFile;
-        echo "0 ${snapshotTime} */${stsInterval} * * ${installationFile} sts" >> $cronFile;
+        echo "0 ${snapshotTime} */${stsInterval} * * root ${installationFile} sts" >> $cronFile;
         echo "# Snapshot cleanup" >> $cronFile;
-        echo "0 ${snapshotTime} * * * ${installationFile} cleanup" >> $cronFile;
+        echo "0 ${snapshotTime} * * * root ${installationFile} cleanup" >> $cronFile;
         echo "# Update cronfile in case of change" >> $cronFile;
-        echo "*/10 * * * * ${installationFile} update-cron" >> $cronFile;
+        echo "*/10 * * * * root ${installationFile} update-cron" >> $cronFile;
+        
+        systemctl restart cron
     else
         echo "Error: No write permission for file ${cronFile}";
         exit 1;
