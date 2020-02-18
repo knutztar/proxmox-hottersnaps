@@ -79,9 +79,9 @@ function snapshot(){
             vmname=$(echo $vm | awk '/[0-9]/{print $2}');
             if [ ! -z "$vmno" ]; then
                 echo "VM ${vmno} ${vmname}:";
-                qm snapshot $vmno $snapname --description "hottersnaps snapshot" --vmstate $savestate;
+                /sbin//sbin/qm snapshot $vmno $snapname --description "hottersnaps snapshot" --vmstate $savestate;
             fi;
-        done < <(qm list);
+        done < <(/sbin//sbin/qm list);
         echo
         
         echo "Snapshotting containers";
@@ -90,9 +90,9 @@ function snapshot(){
             ctname=$(echo $ct | awk '/[0-9]/{print $3}');
             if [ ! -z "$ctno" ]; then
                 echo "CT ${ctno} ${ctname}:";
-                pct snapshot $ctno $snapname --description "hottersnaps snapshot";
+                /sbin/pct snapshot $ctno $snapname --description "hottersnaps snapshot";
             fi;
-        done < <(pct list);
+        done < <(/sbin/pct list);
         echo 
         
     else
@@ -135,14 +135,14 @@ function cleanup(){
                     
                     if [[ $currentTime -gt $ltsDeleteTime ]]; then
                         echo "Found old snapshot ${snapname} for virtual machine ${vmno} ${vmname}";
-                        qm delsnapshot $vmno $snapname
+                        /sbin/qm delsnapshot $vmno $snapname
                     fi;
                     
                 fi;
-            done < <(qm listsnapshot $vmno);
+            done < <(/sbin/qm listsnapshot $vmno);
 
         fi;
-    done < <(qm list);
+    done < <(/sbin/qm list);
     
     while read ct; do
         ctno=$(echo $ct | awk '/[0-9]/{print $1}');
@@ -159,14 +159,14 @@ function cleanup(){
                     
                     if [[ $currentTime -gt $ltsDeleteTime ]]; then
                         echo "Found old snapshot ${snapname} for container ${ctno} ${ctname}";
-                        pct delsnapshot $ctno $snapname
+                        /sbin/pct delsnapshot $ctno $snapname
                     fi;
                     
                 fi;
-            done < <(pct listsnapshot $ctno);
+            done < <(/sbin/pct listsnapshot $ctno);
 
         fi;
-    done < <(pct list);
+    done < <(/sbin/pct list);
     
 }
 
