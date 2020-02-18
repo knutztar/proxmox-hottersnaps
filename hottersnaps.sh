@@ -79,9 +79,9 @@ function snapshot(){
             vmname=$(echo $vm | awk '/[0-9]/{print $2}');
             if [ ! -z "$vmno" ]; then
                 echo "VM ${vmno} ${vmname}:";
-                /sbin//sbin/qm snapshot $vmno $snapname --description "hottersnaps snapshot" --vmstate $savestate;
+                /sbin/qm snapshot $vmno $snapname --description "hottersnaps snapshot" --vmstate $savestate;
             fi;
-        done < <(/sbin//sbin/qm list);
+        done < <(/sbin/qm list);
         echo
         
         echo "Snapshotting containers";
